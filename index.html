@@ -26,7 +26,10 @@
         /* Hero секциясы */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("ashylu.jpeg") center/cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("ashylu.jpg") no-repeat center center;
+			background-size: cover;
+			min-height: 100vh; /* Телефон экранын толық жауып тұруы үшін */
+			width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -509,5 +512,6 @@
 </body>
 
 </html>
+
 
 
