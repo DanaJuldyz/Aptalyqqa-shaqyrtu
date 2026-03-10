@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Апталыққа шақыру</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Hero секциясы */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("ашылу.jpeg") center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .scroll {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            padding: 12px 25px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50px;
+            font-size: 16px;
+            transition: 0.3s;
+            cursor: pointer;
+            margin-top: 50px;
+        }
+
+        .scroll:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+        /* Негізгі контент */
+        .content {
+            padding: 80px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            margin-bottom: 60px;
+            border-left: 8px solid var(--accent-color);
+        }
+
+        .card h1 {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+        }
+
+        /* Спикерлер мен іс-шаралар карточкасы */
+        .person {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            gap: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .person:hover {
+            transform: translateY(-10px);
+        }
+
+        .person img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .info {
+            text-align: left;
+        }
+
+        .info h3 {
+            margin: 0 0 10px 0;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .info p {
+            margin: 5px 0;
+            font-size: 0.95rem;
+        }
+
+        .info strong {
+            color: var(--primary-color);
+        }
+
+        /* Таймер стилі */
+        .timerBox {
+            background: var(--primary-color);
+            color: white;
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 40px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(44, 62, 80, 0.4);
+        }
+
+        #countdown {
+            display: block;
+            margin-top: 15px;
+            font-size: 32px;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: #ffcc00; /* Алтын түстес неон */
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+        }
+
+        /* --- ЖАҢА: ФОТО АНИМАЦИЯ (ГҮЛДЕНУ ГАЛЕРЕЯСЫ) СТИЛЬДЕРІ --- */
+        .gallery-section {
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .gallery-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+        }
+
+        .slideshow-container {
+            max-width: 800px;
+            height: 450px;
+            position: relative;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 25px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            border: 5px solid white;
+        }
+
+.slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0; /* Барлығы басында көрінбейді */
+            background-size: cover;
+            background-position: center;
+            /* 4 фото болса, жалпы уақыт 16s болғаны дұрыс (4 фото * 4 сек) */
+            animation: slideAnimation 16s infinite ease-in-out;
+        }
+
+        /* 1-ші фото: бірден басталады */
+        .slide:nth-child(1) {
+            background-image: url('анимация апай.jpeg');
+            animation-delay: 0s;
+        }
+
+        /* 2-ші фото: 4 секундтан кейін */
+        .slide:nth-child(2) {
+            background-image: url('WhatsApp Image 2026-03-06 at 17.04.33.jpeg');
+            animation-delay: 4s;
+        }
+
+        /* 3-ші фото: 8 секундтан кейін */
+        .slide:nth-child(3) {
+            background-image: url('анимац1.jpeg');
+            animation-delay: 8s;
+        }
+
+        /* 4-ші фото: 12 секундтан кейін */
+        .slide:nth-child(4) {
+            background-image: url('WhatsApp Image 2026-03-06 at 17.04.11.jpeg');
+            animation-delay: 12s;
+        }
+
+        /* Слайдтың астындағы мәтін стилі */
+        .slide-text {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
+            color: white;
+            padding: 40px 25px;
+            box-sizing: border-box;
+            text-align: left;
+            z-index: 10;
+        }
+
+        .slide-text h4 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.6rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .slide-text p {
+            margin: 8px 0 0;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* CSS Анимациясы: Мәтін мен сурет бірге жоғалып, бірге пайда болады */
+        @keyframes slideAnimation {
+            0% { opacity: 0; }
+            5% { opacity: 1; }   /* Пайда болу */
+            20% { opacity: 1; }  /* Көрініп тұру */
+            25% { opacity: 0; }  /* Жоғалу */
+            100% { opacity: 0; } /* Кезегін күту */
+        }        /* --- */
+
+        /* Мобильді нұсқаға бейімдеу */
+        @media (max-width: 768px) {
+            .person {
+                flex-direction: column;
+                text-align: center;
+            }
+            .info {
+                text-align: center;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .slideshow-container {
+                height: 250px; /* Мобильдіде биіктікті азайту */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="hero">
+    <h1>Құрметті әріптестер!</h1>
+    <div class="scroll" onclick="window.scrollTo(0, 800)">⬇ Төмен жылжытыңыз</div>
+</div>
+
+<div class="content">
+
+    <div class="card">
+        <h1>Қош келдіңіздер!</h1>
+        <p>Сіздерді <strong>«Ақпараттық технология»</strong> бөлімінің апталық іс-шараларына салтанатты түрде шақырамыз.</p>
+        <p>📅 <strong>10-17 Наурыз 2026</strong></p>
+        <p>📍 Колледж ғимараты, 3-қабат</p>
+    </div>
+
+    <div class="people">
+        <div class="person">
+            <img src="ашылу.jpeg" alt="Event">
+            <div class="info">
+                <h3>Ашылу салтанаты</h3>
+                <p><strong>Тақырыбы:</strong> Білім беру саласында жасанды интеллекттің мүмкіндіктері</p>
+                <p><strong>Жауапты:</strong> Бөлім меңгерушісі, ПЦК төрайымы мен оқытушылары</p>
+                <p>🕒 10 наурыз, 12:00 | 📍 310 кабинет</p>
+            </div>
+        </div>
+
+        <div class="person">
+            <img src="торғынекеуміз.jpeg" alt="Event">
+            <div class="info">
+                <h3>Ашық сабақ</h3>
+                <p><strong>Тақырыбы:</strong> MySQL-дегі ORDER BY, BETWEEN операторларымен жұмыс</p>
+                <p><strong>Қатысушылар:</strong> ПОа-24 и</p>
+                <p><strong>Жауапты:</strong> Ғалымжан Дана, Нәсіпбаева Ақторғын</p>
+                <p>🕒 10 наурыз, 14:15 | 📍 211 кабинет</p>
+            </div>
+        </div>
+
+        <div class="person">
+            <img src="зарема.jpeg" alt="Event">
+            <div class="info">
+                <h3>«Brawl cup-2026» Турнирі</h3>
+                <p><strong>Тақырыбы: </strong> Бөлімдер арасындағы Киберспорт ойындары</p>
+                <p><strong>Жауапты:</strong> Ақбисен Бекзат, Қайратова Зарема</p>
+                <p>🕒 11 наурыз, 10:00 | 📍 113 кабинет</p>
+            </div>
+        </div>
+    </div>
+
+
+
+	<div class="person">
+		<img src="ани.JPG.jpeg" alt="Event">
+		<div class="info">
+			<h3>Интеллектуалды танымдық сайыс</h3>
+			<p><strong>Тақырыбы:</strong>«Network Battle: Интеллект против системы» атты интеллектуалды танымдық сайыс</p>
+			<p><strong>Қатысушылар:</strong> ВТиИСа-23 р</p>
+			<p><strong>Жауапты: </strong> Абилхан Ани </p>
+			<p>🕒 11 наурыз, 13:30 | 📍 315 кабинет</p>
+		</div>
+	</div>
+
+	<div class="person">
+		<img src="зарема мен.jpeg" alt="Event">
+		<div class="info">
+			<h3>Шеберлік сабақ</h3>
+			<p><strong>Тақырыбы:</strong>«Визуалды генераторлар: бейнелер, видео, аудио»</p>
+			<p><strong>Қатысушылар:</strong> Колледж оқытушылары </p>
+			<p><strong>Жауапты: </strong>Ғалымжан Дана , Қайратова Зарема </p>
+			<p>🕒 12 наурыз, 12:00 | 📍 113 кабинет</p>
+		</div>
+	</div>
+
+	<div class="person">
+		<img src="ашылу.jpeg">
+		<div class="info">
+			<h3>Қонақ дәріс </h3>
+			<p><strong>Тақырыбы:</strong>«Оптикалық байланыс желісі» FiberNet мекемесінің маманымен қонақ дәріс</p>
+			<p><strong>Қатысушылар:</strong> РЭиСа-24  </p>
+			<p><strong>Жауапты: </strong> Серіққалиева Қ </p>
+			<p>🕒 12 наурыз, 15:00 | 📍 310 кабинет</p>
+
+		</div>
+	</div>
+
+
+	<div class="person">
+		<img src="махаббат.JPG.jpeg">
+		<div class="info">
+			<h3>Ашық сабақ </h3>
+			<p><strong>Тақырыбы:</strong>Лабораторная работа №28 Навигация по IOS с помощью Tera Term при консольном подключении  </p>
+			<p><strong>Қатысушылар:</strong>ВТиИСа-23 р  </p>
+			<p><strong>Жауапты: </strong> Ербатырова Махаббат</p>
+			<p>🕒 13 наурыз, 08:45 | 📍 315 кабинет</p>
+
+
+		</div>
+	</div>
+
+
+	<div class="person">
+		<img src="айгүл апай.JPG.jpeg">
+		<div class="info">
+			<h3>Облыстық эксперттерге арналған практикалық семинар </h3>
+			<p><strong>Тақырыбы:</strong>«ElectroLab Skills».Электроника құзіреттілігі бойынша облыстық эксперттерге арналған workshop  </p>
+			<p><strong>Жауапты: </strong>Сариева Айгүл </p>
+			<p>🕒 13 наурыз, 10:00 | 📍 318 кабинет</p>
+		</div>
+	</div>
+
+
+	<div class="person">
+		<img src="апай2.jpeg">
+		<div class="info">
+			<h3>Интеллектуалды танымдық сайыс </h3>
+			<p><strong>Тақырыбы:</strong>“AI эволюция: Жас күш пен Тәжірибе” колледждің жас және тәжірибелі оқытушылары арасында батл  </p>
+			<p><strong>Жауапты: </strong>Тукпатова Мейрамгүл </p>
+			<p>🕒 13 наурыз, 14:00 | 📍 309 кабинет</p>
+
+		</div>
+	</div>
+
+
+	<div class="person">
+		<img src="IMG_2933.JPG.jpeg">
+		<div class="info">
+			<h3>Кәсіби бағдар беру жұмысы </h3>
+			<p><strong>Тақырыбы:</strong>«AIробот» шеберлік сабағы оқушыларға арналған кәсіби бағдар беру жұмысы  </p>
+			<p><strong>Қатысушылар:</strong>№16,17,,18,19 мектептердің 9-сынып оқушылары  </p>
+			<p><strong>Жауапты: </strong> Акбисен Бекзат, Абилхан Ани ,Ғалымжан Дана</p>
+			<p>🕒 16 наурыз, 11:00 | 📍 Колледж акт залы </p>
+
+		</div>
+	</div>
+
+
+	<div class="person">
+		<img src="болған апай2.JPG.jpeg">
+		<div class="info">
+			<h3>Шеберлік сабақ </h3>
+			<p><strong>Тақырыбы:</strong>«3D Шеберхана: идеядан прототипке» студенттерге арналған шеберлік сабақ </p>
+			<p><strong>Қатысушылар:</strong>1,2,3 курс студенттері </p>
+			<p><strong>Жауапты: </strong>Саханова Болған</p>
+			<p>🕒 16 наурыз, 14:00 | 📍 310 кабинет </p>
+
+		</div>
+	</div>
+
+
+
+
+	<div class="person">
+		<img src="эльвира апай.JPG.jpeg">
+		<div class="info">
+			<h3>Ашық сабақ </h3>
+			<p><strong>Тақырыбы:</strong>«Монтаж коммутационных патч панелей» </p>
+			<p><strong>Қатысушылар:</strong>ВТиИСа-24 </p>
+			<p><strong>Жауапты: </strong>Жумагалиева Эльвира</p>
+			<p>🕒 16 наурыз, 15:45  | 📍 310 кабинет </p>
+
+		</div>
+
+	</div>
+
+
+
+
+	<div class="person">
+		<img src="ашылу.jpeg">
+		<div class="info">
+			<h3>Апталықты қорытындылау, студенттер мен оқытушыларды марапаттау </h3>
+			<p><strong>Тақырыбы:</strong> Білім беру саласында жасанды интеллекттің мүмкіндіктері</p>
+			<p><strong>Жауапты: </strong> Бөлім меңгерушісі ПЦК төрайымы, оқытушылары</p>
+			<p>🕒 17 наурыз, 12:00  | 📍 310 кабинет </p>
+		</div>
+	</div>
+
+
+
+    <div class="timerBox">
+        <span style="font-style: italic; opacity: 0.8;">⏳ Апталықтың басталуына қалды:</span>
+        <span id="countdown"></span>
+    </div>
+
+    <div class="gallery-section">
+        <h2>Колледжіміздің тынысы</h2>
+        
+        <div class="slideshow-container">
+            <div class="slide">
+                <div class="slide-text">
+		    <h4>Бірліктегі жетістік</h4>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="slide-text">
+                   <h4>Wordskills шеберлері</h4>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="slide-text">
+                    <h4>Үздік IT шеберлері </h4>
+                </div>
+            </div>
+	    
+            <div class="slide">
+                <div class="slide-text">
+                    <h4>Жаңа жобаларды құрастыру сәті</h4>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+<script>
+    var eventDate = new Date("March 10, 2026 10:00:00").getTime();
+
+    var x = setInterval(function(){
+        var now = new Date().getTime();
+        var distance = eventDate - now;
+
+        var days = Math.floor(distance / (1000*60*60*24));
+        var hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+        var minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+        var seconds = Math.floor((distance % (1000*60)) / 1000);
+
+        document.getElementById("countdown").innerHTML = 
+            days + "д " + hours + "с " + minutes + "м " + seconds + "с";
+
+        if(distance < 0){
+            clearInterval(x);
+            document.getElementById("countdown").innerHTML = "Іс-шара басталды!";
+        }
+    }, 1000);
+</script>
+
+</body>
+</html>
